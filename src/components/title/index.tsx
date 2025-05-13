@@ -1,5 +1,5 @@
 interface TitleProps {
-  title: stirng;
+  title: string;
 }
 
 export default function Title({ title }: TitleProps) {

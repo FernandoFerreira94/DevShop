@@ -8,14 +8,14 @@ export default function Cart() {
   const { cart, total, addItemCart, removeItemCart } = useContext(UserContext);
 
   return (
-    <main className="w-full max-w-7xl h-dvh px-4 mx-auto ">
+    <main className="w-full mt-20 max-w-7xl h-dvh px-4 mx-auto ">
       <Title title="Meu Carrinho" />
       <div>
         {cart.length === 0 && (
           <div className="w-full flex flex-col items-center gap-10">
-            <p className="font-bold text-xl">Ops seu carrinho está vazio</p>
+            <p className="font-bold text-xl">Ops seu carrinho está vazio 😢</p>
             <Link
-              to="/"
+              to="/home"
               className="hover:scale-105 transition duration-300 text-xl bg-slate-600 text-white p-3 px-4 rounded-xl"
             >
               {" "}

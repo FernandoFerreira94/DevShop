@@ -1,12 +1,15 @@
 import { createContext, useState, type ReactNode } from "react";
-import { api } from "../service/api";
+import toast from "react-hot-toast";
+import { collection, getDocs } from "firebase/firestore";
+
+import { Db } from "../firebase/db";
 
 // Define a estrutura dos produtos, incluindo atributos como título, preço e quantidade
 export interface ProductsProps {
   cover: string; // Imagem do produto
   description: string; // Descrição do produto
   title: string; // Nome do produto
-  id: number; // Identificador único do produto
+  id: string; // Identificador único do produto
   price: number; // Preço unitário
   amount: number; // Quantidade do produto no carrinho
   total: number; // Valor total baseado na quantidade * preço
@@ -14,13 +17,13 @@ export interface ProductsProps {
 
 // Define a estrutura do contexto para armazenar produtos e manipular o carrinho
 interface UserContextProps {
-  products: ProductsProps[]; // Lista de produtos disponíveis
   cartAmount: number; // Quantidade total de itens no carrinho
-  getProducts: () => Promise<void>; // Função para buscar produtos da API
   addItemCart: (newItem: ProductsProps) => void; // Função para adicionar produtos ao carrinho
   cart: ProductsProps[];
   removeItemCart: (product: ProductsProps) => void;
   total: string;
+  getFirebase: () => Promise<void>;
+  cartFire: ProductsProps[];
 }
 
 // Define a estrutura das propriedades do `UserProvider`
@@ -33,19 +36,9 @@ export const UserContext = createContext({} as UserContextProps);
 
 // Componente responsável por armazenar o estado global dos produtos e do carrinho
 export default function UserProvider({ children }: UserProviderProps) {
-  const [products, setProducts] = useState<ProductsProps[]>([]); // Estado para armazenar os produtos disponíveis
   const [cart, setCart] = useState<ProductsProps[]>([]); // Estado para armazenar os itens do carrinho
   const [total, setTotal] = useState("");
-
-  // Função assíncrona que busca os produtos na API
-  async function getProducts() {
-    try {
-      const response = await api.get("/products"); // Faz uma requisição GET para buscar os produtos
-      setProducts(response.data); // Atualiza o estado com os produtos obtidos
-    } catch (error) {
-      console.error(error); // Exibe erros no console caso a requisição falhe
-    }
-  }
+  const [cartFire, setCartFire] = useState<ProductsProps[]>([]); // Estado para armazenar os itens do carrinho
 
   // Função para adicionar itens ao carrinho
   function addItemCart(newItem: ProductsProps) {
@@ -63,6 +56,11 @@ export default function UserProvider({ children }: UserProviderProps) {
 
       setCart(cartList); // Atualiza o estado do carrinho com os novos valores
       TotalResultCart(cartList);
+      toast.success("Adicionado mais um no carrihno 👌", {
+        style: {
+          borderRadius: 10,
+        },
+      });
       return;
     }
 
@@ -75,6 +73,11 @@ export default function UserProvider({ children }: UserProviderProps) {
 
     setCart((prevCart) => [...prevCart, data]); // Atualiza o carrinho adicionando o novo item
     TotalResultCart([...cart, data]);
+    toast.success("Produto adicionado no carrinho 🤩", {
+      style: {
+        borderRadius: 10,
+      },
+    });
   }
 
   function removeItemCart(product: ProductsProps) {
@@ -87,12 +90,22 @@ export default function UserProvider({ children }: UserProviderProps) {
 
       setCart(carList);
       TotalResultCart(carList);
+      toast.error("Produto retirado do carrinho 😒", {
+        style: {
+          borderRadius: 10,
+        },
+      });
       return;
     }
 
     const removeItem = cart.filter((item) => item.id !== product.id);
     setCart(removeItem);
     TotalResultCart(removeItem);
+    toast.error("Produto retirado do carrinho 😒", {
+      style: {
+        borderRadius: 10,
+      },
+    });
   }
 
   function TotalResultCart(items: ProductsProps[]) {
@@ -105,21 +118,45 @@ export default function UserProvider({ children }: UserProviderProps) {
       style: "currency",
       currency: "BRL",
     });
-
     setTotal(resultFormat);
+  }
+
+  async function getFirebase() {
+    const postRef = collection(Db, "products");
+
+    await getDocs(postRef)
+      .then((snapshot) => {
+        const lista: ProductsProps[] = [];
+
+        snapshot.forEach((doc) => {
+          lista.push({
+            id: doc.id,
+            cover: doc.data().cover,
+            description: doc.data().description,
+            price: Number(doc.data().price),
+            title: doc.data().title,
+            amount: 1, // Inicialize um valor padrão para quantidade
+            total: Number(doc.data().price), // Inicialize o total com o preço do produto
+          });
+        });
+        setCartFire(lista);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   return (
     // Provedor do contexto que disponibiliza os produtos e funções para os componentes filhos
     <UserContext.Provider
       value={{
-        products,
-        getProducts,
-        cartAmount: cart.length, // Número total de itens no carrinho
         addItemCart,
         removeItemCart,
+        getFirebase,
+        cartAmount: cart.length, // Número total de itens no carrinho
         cart,
         total,
+        cartFire,
       }}
     >
       {children}
