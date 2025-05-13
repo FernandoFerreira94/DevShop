@@ -9,3 +9,32 @@ body {
 button {
   cursor: pointer;
 }
+
+.login {
+  position: relative;
+  overflow: hidden; /* garante que o pseudo-elemento não vaze */
+}
+
+.login::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../src/assets/img/conceito-de-transformacao-digital-de-fundo-de-cerebro-de-tecnologia-de-ia_53876-124672.avif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: blur(5px); /* intensidade do desfoque */
+  z-index: 0;
+}
+
+.login > * {
+  position: relative;
+  z-index: 1;
+}
+
+.content {
+  background-color: rgba(255, 255, 255, 0.896);
+}

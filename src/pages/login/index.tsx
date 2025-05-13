@@ -29,8 +29,8 @@ export default function Login() {
   }
 
   return (
-    <main className="w-full h-dvh border flex  justify-center items-center bg-white">
-      <div className="w-full sm:max-w-sm md:max-w-md lg:max-w-lg border-slate-900 border-2 bg-slate-100 rounded-md py-8 flex flex-col justify-center items-center">
+    <main className="w-full h-dvh border flex  justify-center items-center login ">
+      <div className="content w-full sm:max-w-sm md:max-w-md lg:max-w-lg border-slate-900 border-2 rounded-md py-8 flex flex-col justify-center items-center">
         <div>
           <span className="text-7xl font-bold ">Dev</span>
           <span className=" text-8xl text-blue-400 font-serif ">Shop</span>
