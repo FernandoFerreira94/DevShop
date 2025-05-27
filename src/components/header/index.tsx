@@ -48,17 +48,40 @@ export default function Header() {
   }
 
   return (
-    <header className="shadow-xl fixed w-full top-0 z-50 bg-zinc-50">
-      <nav className="flex w-full max-w-7xl justify-between h-20 mx-auto px-5  items-center">
-        <Link to="/home">
-          <span className="text-4xl font-bold ">Dev</span>
-          <span className=" text-5xl text-blue-400 font-serif ">Shop</span>
+    <header
+      className="shadow-xl fixed w-full top-0 z-50 bg-zinc-50 
+    "
+    >
+      <nav
+        className="flex w-full max-w-7xl justify-between h-20 mx-auto px-5  items-center 
+
+       max-sm:p-0  max-sm:justify-around max-sm:h-23
+      "
+      >
+        <Link to="/home ">
+          <span
+            className="text-4xl font-bold 
+           max-sm:text-3xl
+          "
+          >
+            Dev
+          </span>
+          <span
+            className=" text-5xl text-blue-400 font-serif 
+             max-sm:text-4xl    max-sm:block
+          "
+          >
+            Shop
+          </span>
         </Link>
 
-        <div className="flex gap-5">
+        <div
+          className="flex gap-5  
+          
+        "
+        >
           <span className="text-xl">
-            Olá <strong> {user?.nome ? user.nome : "Visitante"}</strong> Sejá
-            bem vindo
+            Olá <strong> {user?.nome ? user.nome : "Visitante"}</strong>
           </span>
           {user?.nome === "admin" && (
             <Link to="/add">

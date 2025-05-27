@@ -38,7 +38,7 @@ export default function Home() {
     <>
       <main className="w-full mt-20 max-w-7xl h-dvh px-4 mx-auto ">
         <Title title="Produto em alta " />
-        <div className=" grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
+        <div className=" grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5 ">
           {cartFire.map((products) => (
             <section className="w-full " key={products.id}>
               <img
@@ -49,7 +49,7 @@ export default function Home() {
                   navigate(`/product/${products.id}`);
                 }}
               />
-              <div className=" pl-15">
+              <div>
                 <p className="font-medium mt-1 mb-2"> {products.title}</p>
                 <div className="flex w-full items-center gap-5">
                   <strong className="text-zinc-700/90">

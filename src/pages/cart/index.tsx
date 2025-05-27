@@ -26,12 +26,18 @@ export default function Cart() {
         {cart.map((product) => (
           <section
             key={product.id}
-            className="flex w-full max-w-7xl items-center justify-between border-b-2 border-gray-300 "
+            className="flex w-full items-center  justify-between border-b-2 border-gray-300 mb-4 max-sm:gap-6"
           >
-            <img className="w-35" src={product.cover} alt="logo do produto" />
-            <strong>Preço: R$ {product.price}</strong>
+            <img
+              className="w-35 max-sm:w-15"
+              src={product.cover}
+              alt="logo do produto"
+            />
+            <strong className="max-sm:flex  max-sm:flex-wrap">
+              Preço: <span> R$ {product.price}</span>
+            </strong>
 
-            <div className="flex gap-3 items-center justify-center">
+            <div className="flex gap-3 items-center justify-centerb ">
               <button
                 onClick={() => removeItemCart(product)}
                 className="bg-slate-600 rounded text-white font-medium flex items-center justify-center px-2  hover:bg-slate-900 transition duration-300"
@@ -47,7 +53,7 @@ export default function Cart() {
               </button>
             </div>
 
-            <strong className="float-right">
+            <strong className="float-right ">
               SubTotal:{" "}
               {product.total.toLocaleString("pt-BR", {
                 style: "currency",

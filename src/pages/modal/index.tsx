@@ -57,9 +57,13 @@ export default function ModalProduct() {
 
   return (
     <main className="w-full mt-20 max-w-7xl h-dvh px-4 mx-auto ">
-      <div className="flex w-full mx-auto mt-40 justify-between gap-50 ">
+      <div
+        className="flex w-full mx-auto mt-40 justify-between gap-20 
+        max-sm:flex-col max-sm:pb-30 max-sm:gap-10
+      "
+      >
         <img
-          className="w-120 border border-slate-600 h-100"
+          className="w-120 border border-slate-600 object-cover"
           src={product?.cover}
           alt=""
         />

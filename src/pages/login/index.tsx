@@ -29,16 +29,31 @@ export default function Login() {
   }
 
   return (
-    <main className="w-full h-dvh border flex  justify-center items-center login ">
-      <div className="content w-full sm:max-w-sm md:max-w-md lg:max-w-lg border-slate-900 border-2 rounded-md py-8 flex flex-col justify-center items-center">
+    <main className="w-full h-dvh border flex  justify-center items-center login">
+      <div
+        className="content w-full  sm:max-w-sm md:max-w-md lg:max-w-lg border-slate-900 border-2 rounded-md py-8 flex flex-col justify-center items-center 
+      max-sm:w-9/10
+      "
+      >
         <div>
-          <span className="text-7xl font-bold ">Dev</span>
-          <span className=" text-8xl text-blue-400 font-serif ">Shop</span>
+          <span
+            className="text-7xl font-bold 
+          max-sm:text-6xl
+          "
+          >
+            Dev
+          </span>
+          <span
+            className=" text-8xl text-blue-400 font-serif 
+           max-sm:text-7xl"
+          >
+            Shop
+          </span>
         </div>
 
         <form
           onSubmit={handleLogin}
-          className="mt-10 flex  flex-col gap-4 w-6/10"
+          className="mt-10 flex  flex-col gap-4 w-7/10"
         >
           <label htmlFor="">
             <strong>Nome:</strong>{" "}
